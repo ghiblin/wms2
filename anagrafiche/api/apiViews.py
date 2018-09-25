@@ -68,10 +68,13 @@ class LoginView(views.APIView):
         # con python 3 request.body è di tipo byte ma json.load()
         # si aspetta una stringa. quindi devo aggiungere 
         # .decode('utf-8')
-        data = json.loads(request.body.decode('utf-8'))
+        # import pdb; pdb.set_trace()
+        # data = json.loads(request.body.decode('utf-8'))
+        # username = data.get('username', None)
+        # password = data.get('password', None)
 
-        username = data.get('username', None)
-        password = data.get('password', None)
+        username = request.data['username']
+        password = request.data['password']
 
         user = authenticate(username=username, password=password)
 
