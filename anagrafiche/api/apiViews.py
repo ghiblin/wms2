@@ -17,6 +17,7 @@ from rest_framework.response import Response
 from .apiPermissions import *  # IsAuthorOfPost
 from .apiSerializers import *  # PostSerializer
 from .apiFilters import *
+from .apiPaginator import DefaultPagination
 from django.core.files.base import ContentFile
 from django.http import HttpResponse
 
@@ -202,6 +203,12 @@ class CommessaViewSet(LoggingMixin, viewsets.ModelViewSet):
     filter_backends = (filters.DjangoFilterBackend, filters.SearchFilter,)
     filter_class = CommessaFilter
     search_fields = ('cliente__ragione_sociale', 'cliente__cognome')
+    pagination_class = DefaultPagination
+
+    # filter_backends = (filters.DjangoFilterBackend, filters.OrderingFilter,)
+    # filter_class = StepPercorsoEsecuzioneFilter
+    # ordering_fields = ('id', 'esecuzione', 'stepPercorso')
+
 
     def get_permissions(self):
         # elenco commesse --> list
