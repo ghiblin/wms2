@@ -1,0 +1,39 @@
+# elenco dei pacchetti da installare
+
+django==1.8
+selenium
+django-extensions
+
+django-localflavor
+
+# Prima di lanciare il comando 'pip3.4 install -r requirements.txt'
+# bisogna installare le librerie -dev. Non so se servono tutte e due o
+# solo python3.4-dev:
+# sudo apt-get install python3-dev
+# sudo apt-get install python3.4-dev
+mysqlclient
+
+# Per utilizzare Postgres invece di mysql, decommentare la seguente riga:
+# psycopg2
+
+# Per l'installazione di psycopg2 potrebbe essere necessario eseguire:
+# sudo apt-get install python3-psycopg2
+
+## API JSON
+djangorestframework==3.1.0
+markdown
+django-filter
+drf-nested-routers==0.9.0
+
+## Creazione file xlsx
+XlsxWriter
+
+# per attivare CORS:
+django-cors-headers
+
+# test javascript
+
+# Visto che il repository ufficiale non funziona con python3.4, uso un fork:
+django-casper   
+# -e git+https://github.com/smorstabilini/django-casper.git#egg=django-casper
+

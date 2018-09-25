@@ -1,0 +1,415 @@
+[
+{
+    "model": "anagrafiche.tipoaspettoesteriore",
+    "pk": 1,
+    "fields": {
+        "descrizione": "Bancale di plastica"
+    }
+},
+{
+    "model": "anagrafiche.tipoaspettoesteriore",
+    "pk": 2,
+    "fields": {
+        "descrizione": "Scatola di cartone"
+    }
+},
+{
+    "model": "anagrafiche.tipoaspettoesteriore",
+    "pk": 3,
+    "fields": {
+        "descrizione": "Tubo di cartone"
+    }
+},
+{
+    "model": "anagrafiche.tipoaspettoesteriore",
+    "pk": 4,
+    "fields": {
+        "descrizione": "Fascio"
+    }
+},
+{
+    "model": "anagrafiche.tipoaspettoesteriore",
+    "pk": 5,
+    "fields": {
+        "descrizione": "Scatola su bancale di plastica"
+    }
+},
+{
+    "model": "anagrafiche.tipoaspettoesteriore",
+    "pk": 6,
+    "fields": {
+        "descrizione": "Container"
+    }
+},
+{
+    "model": "anagrafiche.tipoaspettoesteriore",
+    "pk": 7,
+    "fields": {
+        "descrizione": "A vista"
+    }
+},
+{
+    "model": "anagrafiche.tipoaspettoesteriore",
+    "pk": 8,
+    "fields": {
+        "descrizione": "Sacchetto"
+    }
+},
+{
+    "model": "anagrafiche.tipoaspettoesteriore",
+    "pk": 9,
+    "fields": {
+        "descrizione": "Cesta"
+    }
+},
+{
+    "model": "anagrafiche.tipoaspettoesteriore",
+    "pk": 10,
+    "fields": {
+        "descrizione": "Bancale di legno"
+    }
+},
+{
+    "model": "anagrafiche.tipoaspettoesteriore",
+    "pk": 11,
+    "fields": {
+        "descrizione": "Cassa di legno"
+    }
+},
+{
+    "model": "anagrafiche.tipoaspettoesteriore",
+    "pk": 12,
+    "fields": {
+        "descrizione": "Scatola su bancale di legno"
+    }
+},
+{
+    "model": "anagrafiche.tipoaspettoesteriore",
+    "pk": 13,
+    "fields": {
+        "descrizione": "Imballo in pluriball"
+    }
+},
+{
+    "model": "anagrafiche.tipoaspettoesteriore",
+    "pk": 14,
+    "fields": {
+        "descrizione": "Busta"
+    }
+},
+{
+    "model": "anagrafiche.tipotrasportoacura",
+    "pk": 1,
+    "fields": {
+        "descrizione": "A mezzo vettore"
+    }
+},
+{
+    "model": "anagrafiche.tipotrasportoacura",
+    "pk": 2,
+    "fields": {
+        "descrizione": "A mezzo destinatario"
+    }
+},
+{
+    "model": "anagrafiche.tipotrasportoacura",
+    "pk": 3,
+    "fields": {
+        "descrizione": "A mezzo mittente"
+    }
+},
+{
+    "model": "anagrafiche.tipotrasportoacura",
+    "pk": 4,
+    "fields": {
+        "descrizione": "Da concordare"
+    }
+},
+{
+    "model": "anagrafiche.tipotrasportoacura",
+    "pk": 5,
+    "fields": {
+        "descrizione": "Via e-mail"
+    }
+},
+{
+    "model": "anagrafiche.tipotrasportoacura",
+    "pk": 6,
+    "fields": {
+        "descrizione": "Via internet"
+    }
+},
+{
+    "model": "anagrafiche.tipotrasportoacura",
+    "pk": 7,
+    "fields": {
+        "descrizione": "Via assistenza remota"
+    }
+},
+{
+    "model": "anagrafiche.tipoporto",
+    "pk": 1,
+    "fields": {
+        "descrizione": "Franco Stabilimento"
+    }
+},
+{
+    "model": "anagrafiche.tipoporto",
+    "pk": 2,
+    "fields": {
+        "descrizione": "FCA"
+    }
+},
+{
+    "model": "anagrafiche.tipoporto",
+    "pk": 3,
+    "fields": {
+        "descrizione": "FAS"
+    }
+},
+{
+    "model": "anagrafiche.tipoporto",
+    "pk": 4,
+    "fields": {
+        "descrizione": "FOB"
+    }
+},
+{
+    "model": "anagrafiche.tipoporto",
+    "pk": 5,
+    "fields": {
+        "descrizione": "CFR"
+    }
+},
+{
+    "model": "anagrafiche.tipoporto",
+    "pk": 6,
+    "fields": {
+        "descrizione": "CIF"
+    }
+},
+{
+    "model": "anagrafiche.tipoporto",
+    "pk": 7,
+    "fields": {
+        "descrizione": "CPT"
+    }
+},
+{
+    "model": "anagrafiche.tipoporto",
+    "pk": 8,
+    "fields": {
+        "descrizione": "CIP"
+    }
+},
+{
+    "model": "anagrafiche.tipoporto",
+    "pk": 9,
+    "fields": {
+        "descrizione": "Franco Destino"
+    }
+},
+{
+    "model": "anagrafiche.tipoporto",
+    "pk": 10,
+    "fields": {
+        "descrizione": "DAT"
+    }
+},
+{
+    "model": "anagrafiche.tipoporto",
+    "pk": 11,
+    "fields": {
+        "descrizione": "DAP"
+    }
+},
+{
+    "model": "anagrafiche.tipoporto",
+    "pk": 12,
+    "fields": {
+        "descrizione": "DDU"
+    }
+},
+{
+    "model": "anagrafiche.tipocausaletrasporto",
+    "pk": 1,
+    "fields": {
+        "descrizione": "C/Noleggio"
+    }
+},
+{
+    "model": "anagrafiche.tipocausaletrasporto",
+    "pk": 2,
+    "fields": {
+        "descrizione": "C/Prove"
+    }
+},
+{
+    "model": "anagrafiche.tipocausaletrasporto",
+    "pk": 3,
+    "fields": {
+        "descrizione": "C/Prove distruttive"
+    }
+},
+{
+    "model": "anagrafiche.tipocausaletrasporto",
+    "pk": 4,
+    "fields": {
+        "descrizione": "C/Visione"
+    }
+},
+{
+    "model": "anagrafiche.tipocausaletrasporto",
+    "pk": 5,
+    "fields": {
+        "descrizione": "Completamento Impianto"
+    }
+},
+{
+    "model": "anagrafiche.tipocausaletrasporto",
+    "pk": 6,
+    "fields": {
+        "descrizione": "Fornitura in Garanzia"
+    }
+},
+{
+    "model": "anagrafiche.tipocausaletrasporto",
+    "pk": 7,
+    "fields": {
+        "descrizione": "Gratuito"
+    }
+},
+{
+    "model": "anagrafiche.tipocausaletrasporto",
+    "pk": 8,
+    "fields": {
+        "descrizione": "Reso"
+    }
+},
+{
+    "model": "anagrafiche.tipocausaletrasporto",
+    "pk": 9,
+    "fields": {
+        "descrizione": "Reso da C/Montaggio"
+    }
+},
+{
+    "model": "anagrafiche.tipocausaletrasporto",
+    "pk": 10,
+    "fields": {
+        "descrizione": "Reso da conto prove"
+    }
+},
+{
+    "model": "anagrafiche.tipocausaletrasporto",
+    "pk": 11,
+    "fields": {
+        "descrizione": "Reso da prestito d'uso"
+    }
+},
+{
+    "model": "anagrafiche.tipocausaletrasporto",
+    "pk": 12,
+    "fields": {
+        "descrizione": "Reso dopo visione"
+    }
+},
+{
+    "model": "anagrafiche.tipocausaletrasporto",
+    "pk": 13,
+    "fields": {
+        "descrizione": "Reso lavorato"
+    }
+},
+{
+    "model": "anagrafiche.tipocausaletrasporto",
+    "pk": 14,
+    "fields": {
+        "descrizione": "Reso lavorato in garanzia"
+    }
+},
+{
+    "model": "anagrafiche.tipocausaletrasporto",
+    "pk": 15,
+    "fields": {
+        "descrizione": "Reso Lavorato Intercompany"
+    }
+},
+{
+    "model": "anagrafiche.tipocausaletrasporto",
+    "pk": 16,
+    "fields": {
+        "descrizione": "Reso non lavorato"
+    }
+},
+{
+    "model": "anagrafiche.tipocausaletrasporto",
+    "pk": 17,
+    "fields": {
+        "descrizione": "Reso non riparato"
+    }
+},
+{
+    "model": "anagrafiche.tipocausaletrasporto",
+    "pk": 18,
+    "fields": {
+        "descrizione": "Reso revisionato in garanzia"
+    }
+},
+{
+    "model": "anagrafiche.tipocausaletrasporto",
+    "pk": 19,
+    "fields": {
+        "descrizione": "Reso riparato"
+    }
+},
+{
+    "model": "anagrafiche.tipocausaletrasporto",
+    "pk": 20,
+    "fields": {
+        "descrizione": "Reso riparato in garanzia"
+    }
+},
+{
+    "model": "anagrafiche.tipocausaletrasporto",
+    "pk": 21,
+    "fields": {
+        "descrizione": "Reso scarti lavorazione"
+    }
+},
+{
+    "model": "anagrafiche.tipocausaletrasporto",
+    "pk": 22,
+    "fields": {
+        "descrizione": "Sostituzione in garanzia"
+    }
+},
+{
+    "model": "anagrafiche.tipocausaletrasporto",
+    "pk": 23,
+    "fields": {
+        "descrizione": "Trasferimento in fiera"
+    }
+},
+{
+    "model": "anagrafiche.tipocausaletrasporto",
+    "pk": 24,
+    "fields": {
+        "descrizione": "Vendita"
+    }
+},
+{
+    "model": "anagrafiche.tipocausaletrasporto",
+    "pk": 25,
+    "fields": {
+        "descrizione": "Vendita lav e montaggio (odl)"
+    }
+},
+{
+    "model": "anagrafiche.tipocausaletrasporto",
+    "pk": 26,
+    "fields": {
+        "descrizione": "Vendita la a disegno (odl)"
+    }
+}
+]

@@ -1,0 +1,55 @@
+[
+{
+    "fields": {
+        "user_permissions": [],
+        "last_name": "",
+        "date_joined": "2015-01-26T21:53:30Z",
+        "is_staff": true,
+        "first_name": "",
+        "is_active": true,
+        "is_superuser": true,
+        "last_login": "2015-02-04T13:59:25Z",
+        "username": "admin",
+        "password": "pbkdf2_sha256$12000$P2sl6lWnnHcj$oVvZr3I54IvDosGvvx5qurb/2pG5jlxpCCkdpeA2Ayo=",
+        "email": "info@studiogammasnc.it",
+        "groups": []
+    },
+    "pk": 1,
+    "model": "auth.user"
+},
+{
+    "fields": {
+        "descrizione": "Lavoro preventivato officina"
+    },
+    "pk": 1,
+    "model": "anagrafiche.tipolavoro"
+},
+{
+    "fields": {
+        "descrizione": "Lavoro extrapreventivo officina"
+    },
+    "pk": 2,
+    "model": "anagrafiche.tipolavoro"
+},
+{
+    "fields": {
+        "descrizione": "Lavoro preventivato cantiere"
+    },
+    "pk": 3,
+    "model": "anagrafiche.tipolavoro"
+},
+{
+    "fields": {
+        "descrizione": "Lavoro extrapreventivo cantiere"
+    },
+    "pk": 4,
+    "model": "anagrafiche.tipolavoro"
+},
+{
+    "fields": {
+        "descrizione": "Manutenzione"
+    },
+    "pk": 5,
+    "model": "anagrafiche.tipolavoro"
+}
+]

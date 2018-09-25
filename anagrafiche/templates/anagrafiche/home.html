@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta author="Studio Gamma snc">
+    <title>Mr. Ferro WMS</title>
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.dataTables.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/dataTables.bootstrap.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap-switch.min.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/select2.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/select2-bootstrap.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/fileinput.min.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/backgrid.css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/extensions/paginator/backgrid-paginator.css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/extensions/text-cell/backgrid-text-cell.css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/extensions/moment-cell/backgrid-moment-cell.min.css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css" />
+    <script src="{{ STATIC_URL }}js/vendor/modernizr.js"></script>
+    <meta name="csrf-token" content="{{csrf_token}}">
+    <style>
+   
+    </style>
+  </head>
+  <body>
+  
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <div id="header-region"></div>
+        <ul id="login-region" class="nav navbar-nav navbar-right"></ul>
+      </div>
+    </div>
+  </nav>
+  
+  <div id="content" class="container">
+    <div id="alert-region"></div>
+    <div id="main-region"></div>
+  </div>
+
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-hidden="true">
+    </div>
+  
+    <!-- Loading View Template -->
+    <script type="text/template" id="login-view">
+      <div class="col-lg-12" id="titleBar">
+        <h1 class="text-center">Login</h1>
+      </div>
+      <div class="row">
+        <div class="col-sm-8 col-sm-offset-2">
+          <form id="login-form" class="form-horizontal well">
+            <div class="form-group">
+              <label for="username" class="col-sm-4 control-label">Username:</label>
+              <div class="col-sm-8">
+                <input type="text" name="username" class="form-control">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="password" class="col-sm-4 control-label">Password:</label>
+              <div class="col-sm-8">
+                <input type="password" name="password" class="form-control">
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-8 col-sm-offset-4">
+                <a class="btn btn-primary js-submit">
+                  <span class="glyphicon glyphicon-user"></span>&nbsp;Login
+                </a>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </script>
+  
+    <script type="text/template" id="header-template">
+      <% if (hasNested) { %>
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+          <%= label %>
+          <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu" role="menu">
+        </ul>
+      <% } else { %>
+        <a href="#<%= url %>"><%= label %></a>
+      <% } %>
+    </script>
+    <!-- Home Templates -->
+    <script type="text/template" id="home-template">
+      <div class="row">
+        <% _.each(links, function(link) { %>
+          <div class="col-md-6 col-lg-4">
+            <a href="#<%= link.url %>" class="btn btn-primary btn-lg btn-block"><%= link.label %></a>
+          </div>
+        <% }); %>
+      </div>
+    </script>
+    
+    <!-- Common Templates -->
+    <script type="text/template" id="filter-layout">
+      <div id="title-region" class="page-header"></div>
+      <div class="row" id="panel-region">  
+      </div>
+      <div class="row">
+        <div class="col-md-12" id="list-region">
+        </div>
+      </div>
+    </script>
+    
+    <script type="text/template" id="filter-panel">
+      <div class="col-sm-6">
+        <div class="form-inline">
+          <% if (canAdd) { %>
+            <a href="#" class="btn btn-primary js-new">
+              <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Nuovo
+            </a>
+          <% } %>
+          <% _.each(fields, function(field) { %> 
+            <% if (field.type === "checkbox") { %>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" name="<%= field.name %>" checked data-label-text="<%= field.label %>">
+                </label>
+              </div>
+            <% } %>
+          <% }); %>
+        </div>
+      </div>
+      <form id="filter-form">
+        <div class="col-sm-6">
+          <div class="form-grup">
+            <div class="input-group">
+              <input type="text" placeholder="Filtro" class="form-control js-filter-criterion" value="<%= criterion %>">
+              <a href="#" class="btn btn-primary input-group-addon js-filter">Filtra</a>
+            </div>
+          </div>
+        </div>
+      </form>
+    </script>
+    
+    <script type="text/template" id="model-list">
+      <thead>
+        <tr>
+          <% _.each(headers, function(header) { %>
+            <th scope="column" width="<%= header.width %>" class="header <%= header.className %>"
+              <% if (header.name) { %>name="<%= header.name %>"<% } %>>
+              <% if (header.name && header.name === selected) { %> <u><% } %>
+              <%= header.label %>
+              <% if (header.name && header.name === selected) { %></u><% } %>
+            </th>
+          <% }); %>
+        </tr>
+      </thead>
+      <tbody></tbody>
+      <tfoot></tfoot>
+    </script>
+    
+    <script type="text/template" id="model-list-item">
+      <% _.each(fields, function(field) { %>
+        <td <% if (field.className) { %> class="<%= field.className %>"<% } %>>
+          <% if (_.isObject(field)) { %>
+            <% if (field.lookup) { %>
+              <%= eval(field.lookup).find({id: eval(field.field) }) %>
+            <% } else if (field.fixed) { %>
+              <%= eval(field.field).toFixed(field.fixed) %>
+            <% } else if (field.money) { %> 
+              <%= (eval(field.field) || 0).formatMoney() %>
+            <% } else { %>
+              <%= field.format ? (eval(field.field) || "").toString(field.format) : eval(field.field) %>
+            <% } %>
+          <% } else { %>
+            <%= eval(field) %>
+          <% } %>
+        </td>
+      <% }); %>
+      <td name="actions" class="text-right">
+        <% if (showEdit) { %>
+          <span class="js-edit">
+            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+          </span>
+        <% } %>
+        <% if (showDelete) { %>
+          <span class="js-delete">
+            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+          </span>
+        <% } %>
+      </td>
+    </script>
+    
+    <script type="text/template" id="modal-form">
+      <div class="modal-content">
+        <form class="form-horizontal">
+          <div class="modal-header">
+            <h4 class="modal-title"><%= title %></h4>
+          </div>
+          <div class="modal-body">
+            <% _.each(fields, function(field) { %>
+              <div class="form-group field-<%= field.name %>">
+                <% if (field.type === "checkbox") { %>
+                  <div class="col-sm-offset-4 col-sm-8">
+                    <div class="checkbox">
+                      <label>
+                        <input type="checkbox" name="<%= field.name %>"><%= field.label %>
+                      </label>
+                    </div>
+                  </div>
+                <% } else { %>
+                  <% if (field.label) { %>
+                    <label for="<%= field.name %>" class="col-sm-4 control-label"><%= field.label %>:</label>
+                    <div class="col-sm-8">
+                  <% } else { %>
+                    <div class="col-sm-offset-4 col-sm-8">
+                  <% } %>
+                    <% if (field.type === "select") { %>
+                      <select name="<%= field.name %>" class="form-control select2-select" 
+                      <%if (field.placeholder) { %> data-placeholder="<%= field.placeholder %>" <% } %>>
+                      </select>
+                    <% } else if (field.type === "textarea") { %>
+                      <textarea name="<%= field.name %>" class="form-control" <%if (field.readonly) { %> readonly <% } %> ></textarea>
+                    <% } else { %>
+                      <input type="<%= field.type || "text" %>" name="<%= field.name %>" class="form-control"
+                      <% if (field.readonly) { %> readonly <% } %> >
+                    <% } %>
+                  </div>
+                <% } %>
+              </div>
+            <% }); %>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary js-submit" data-loading-text="Saving...">
+              <span class="glyphicon glyphicon-floppy-disk"></span>&nbsp;<%= saveButtonText %>
+            </button>&nbsp;
+            <a href="#" class="btn btn-default js-cancel">Annulla</a>
+            <% if (notes !== "") { %> 
+              <div class="well text-left"><%= notes %></div>
+            <% } %>
+          </div>
+        </form>
+      </div>
+    </script>
+        
+    <script type="text/template" id="details-template">
+      <% if (user.can(editPermission)) { %>
+        <a href="#" class="btn btn-primary js-edit">
+          <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>&nbsp;Modifica
+        </a>
+      <% } %>
+      <dl class="dl-horizontal">
+        <% if (typeId === "G") { %>
+          <dt>Ragione Sociale:</dt><dd><%= corporateName %></dd>
+        <% } else { %>
+          <dt>Nome:</dt><dd><%= firstName %></dd>
+          <dt>Cognome:</dt><dd><%= lastName %></dd>
+        <% } %>
+        <dt>Partita IVA:</dt><dd><%= vatNumber %></dd>
+        <dt>Codice Fiscale:</dt><dd><%= taxCode %></dd>
+        <dt>Tipo Pagamento:</dt><dd><%= paymentTypes.find({id: paymentTypeId}) %></dd>
+        <dt>Pers. Riferimento:</dt><dd><%= applyTo %></dd>
+      </dl>
+    </script>
+    
+    <script type="text/template" id="entity-info-list">
+      <% if (canAdd) { %>
+        <a class="btn btn-primary js-add">
+          <span class="glyphicon glyphicon-plus"></span>&nbsp;Nuovo
+        </a>
+      <% } %>
+      <dl class="dl-horizontal">
+      </dl>
+    </script>
+
+    <script type="text/template" id="filter-view-template">
+      <% _.each(fields, function(field) { %>
+        <div class="form-group">
+          <label for="<%= field.name %>" class="col-sm-3 control-label"><%= field.label %>:</label>
+          <div class="col-sm-9">
+            <% if (field.type === "select") { %>
+              <select name="<%= field.name %>" class="form-control"></select>
+            <% } else { %>
+              <input type="<%= field.type || "text" %>" name="<%= field.name %>" class="form-control" />
+            <% } %>
+          </div>
+        </div>
+      <% }); %>
+      <% _.each(buttons, function(button) { %>
+        <div class="form-group">
+          <div class="col-sm-12">
+            <button type="submit" class="btn btn-primary btn-block" name="<%= button.name %>">
+              <%= button.label %>
+              <% if (button.icon) { %>
+                &nbsp;<span class="glyphicon glyphicon-<%= button.icon %>"></span>
+              <% } %>
+            </button>
+          </div>
+        </div>
+      <% }); %>
+    </script>
+    
+    <script type="text/template" id="panel-template">
+      <ul class="nav nav-tabs">
+        <li role="presentation">
+          <p class="navbar-btn actions-bar">
+            <% if (showAdd) { %>
+              <a href="#" class="btn btn-primary js-add">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Nuovo
+              </a>
+            <% } %>
+          </p>
+        </li>
+        <% if (typeof tabs !== "undefined") { %>
+          <% _.each(tabs, function(tab) { %>
+            <li role="presentation" id="<%= tab.id %>">
+              <a><%= tab.label %></a>
+            </li>
+          <% }); %>
+        <% } %>
+        <% if (showDropButton) { %>
+          <li role="presentation" class="pull-right">
+            <p class="navbar-btn">
+              <a href="#" class="btn btn-primary js-drop">
+                <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>&nbsp;Drop
+              </a>
+            </p>
+          </li>
+        <% } %>
+      </ul>
+    </script>
+    
+    <script type="text/template" id="drilldown-template">
+      <thead>
+        <tr>
+          <% if (typeof headers !== "undefined") { %>
+            <% _.each(headers, function(header) { %>
+              <%= headerTemplate(header) %>
+            <% }); %>
+          <% } %>
+        </tr>
+      </thead>
+      <tbody></tbody>
+      <tfoot></tfoot>
+    </script>
+    
+    <script type="text/template" id="drilldown-row-template">
+      <td>
+        <span class="glyphicon glyphicon-plus js-expand"></span>
+        <span class="glyphicon glyphicon-minus js-contract"></span>
+      </td>
+      <% _.each(fields, function(field) { %>
+        <td <% if (field.className) { %> class="<%= field.className %>"<% } %>>
+          <% if (_.isObject(field)) { %>
+            <% if (field.lookup) { %>
+              <%= options[field.lookup].find({id: eval(field.field) }) %>
+            <% } else if (field.fixed) { %>
+              <%= eval(field.field).toFixed(field.fixed) %>
+            <% } else { %>
+              <%= field.format ? eval(field.field).toString(field.format) : eval(field.field) %>
+            <% } %>
+          <% } else { %>
+            <%= eval(field) %>
+          <% } %>
+        </td>
+      <% }); %>
+    </script>
+    
+    <script type="text/template" id="drilldown-table-template">
+      <td></td>
+      <td colspan="<%= cols %>">
+        <table class="table table-hover">
+          <% if (typeof headers !== "undefined") { %>
+            <thead>
+              <tr>
+                <% _.each(headers, function(header) { %>
+                  <th><%= header %></th>
+                <% }); %>
+              </tr>
+            </thead>
+          <% } %>
+          <tbody></tbody>
+        </table>
+      </td>
+    </script>
+    
+    <script type="text/template" id="commission-template">
+      <% if (canEdit) { %>
+        <a href="#" class="btn btn-primary js-edit">
+          <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>&nbsp;Modifica
+        </a>
+      <% } %>
+      <dl class="dl-horizontal">
+        <dt>Codice:</dt><dd><%= code %></dd>
+        <dt>Cliente:</dt><dd><%= clients.find({ id: clientId }) %></dd>
+        <dt>Data Apertura:</dt><dd><%= startDate.toString("dd/MM/yyyy") %></dd>
+        <dt>Data Consegna:</dt><dd><% if (deliveryDate) { %><%= deliveryDate.toString("dd/MM/yyyy") %><% } %></dd>
+        <dt>Destinazione:</dt><dd><% if (destinationId) { %><%= addresses.find({id:destinationId}) %><% } %></dd>
+        <dt>Prodotto:</dt><dd><%= product %></dd>
+      </dl>
+    </script>
+    
+    <!-- Sheets Templates -->
+    <script type="text/template" id="sheets-list-layout">
+      <div class="row">
+        <div class="col-lg-12" id="titleBar">
+          <h1 class="text-center">Consuntivi</h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-8" id="employees-list"></div>
+        <div class="col-sm-4" id="filter"></div>
+      </div>
+      <hr />
+      <div class="row" id="sheets-list"></div>
+    </script>
+    
+    <script type="text/template" id="sheets-filter-view">
+      <% _.each(fields, function(field) { %>
+        <div class="form-group">
+          <label for="<%= field.name %>" class="col-sm-2 control-label"><%= field.label %>:</label>
+          <div class="col-sm-10">
+            <input type="<%= field.type || "text" %>" name="<%= field.name %>" class="form-control" />
+          </div>
+        </div>
+      <% }); %>
+      <div class="form-group">
+        <div class="col-sm-10 col-sm-offset-2">
+          <button type="submit" class="btn btn-primary btn-block" value="send">
+            Cerca&nbsp;
+            <span class="glyphicon glyphicon-filter"></span>
+          </button>
+        </div>
+      </div>
+    </script>
+    
+    <script type="text/template" id="employees-list-view">       
+      <thead>
+        <tr>
+          <th scope="column" width="45%">Nome</th>
+          <th scope="column" width="45%">Cognome</th>
+          <th scope="column" width="10%" class="text-center">Totale Ore</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </script>
+    
+    <script type="text/template" id="employee-view">
+      <td><%= lastName %></td>
+      <td><%= firstName %></td>
+      <td class="text-right"><%= hours %></td>
+    </script>
+        
+    <script type="text/template" id="sheet-list-view">
+      <div class="row">
+        <form class="form-horizontal">
+          <% _.each(fields, function(field) { %>
+            <div class="col-sm-5">
+              <div class="form-group">
+                <label for="<%= field.name %>" class="col-sm-4 control-label"><%= field.label %>:</label>
+                <div class="col-sm-6">
+                  <input type="<%= field.type || "text" %>" name="<%= field.name %>" class="form-control" readonly />
+                </div>
+              </div>
+            </div>
+          <% }); %>
+          <div class="col-sm-2 text-right">
+            <a class="btn btn-primary js-add" href="#">
+              <span class="glyphicon glyphicon-plus"></span>
+            </a>
+          </div>
+        </form>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="column" width="10%">Data</th>
+              <th scope="column" width="15%">Commessa</th>
+              <th scope="column" width="15%">Tipo Lavoro</th>
+              <th scope="column" width="10%" class="text-right">Ore</th>
+              <th scope="column" width="25%">Note</th>
+              <th scope="column" width="5%"></th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td name="hours" class="text-right"></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tfoot>
+        </table>
+        </div>
+      </div>
+    </script>
+    
+    <script type="text/template" id="sheet-list-item">
+      <td><%= date %></td>
+      <td><%= commissionId %></td>
+      <td><%= workType %></td>
+      <td class="text-right"><%= hours %></td>
+      <td><%= note %></td>
+      <td class="text-right">
+        <span class="glyphicon glyphicon-pencil js-edit"></span>&nbsp;
+        <span class="glyphicon glyphicon-trash js-delete"></span>
+      </td>
+    </script>
+    
+    <script type="text/template" id="employee-template">
+      <div class="page-header">
+        <a class="btn btn-primary pull-right js-edit">
+          <span class="glyphicon glyphicon-pencil"></span>
+        </a>
+        <h2>(<%= serialNumber %>) <%= firstName %> <%= lastName %></h2>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <dl class="dl-horizontal">
+            <dt>Nome:</dt>
+            <dd><%= firstName %></dd>
+            <dt>Cognome:</dt>
+            <dd><%= lastName %></dd>
+            <dt>Codice Fiscale:</dt>
+            <dd><%= taxCode %></dd>
+            <dt>Salta Validazione CF:</dt>
+            <dd><input type="checkbox" <% if (bypassTaxCode) { %>checked="checked" <% } %> disabled></input></dd>
+            <dt>Data Assunzione:</dt>
+            <dd><%= recruitmentDate && recruitmentDate.toString("dd/MM/yyyy") %></dd>
+            <dt>Data Cessazione:</dt>
+            <dd><%= cessationDate && cessationDate.toString("dd/MM/yyyy") %></dd>
+            <dt>Sc. Visita Medica:</dt>
+            <dd><%= medicalExpireDate && medicalExpireDate.toString("dd/MM/yyyy") %></dd>
+            <dt>Attivo:</dt>
+            <dd><input type="checkbox" <% if (active) { %>checked="checked" <% } %> disabled></input></dd>
+            <dt>Costo Diretto:</dt>
+            <dd><input type="checkbox" <% if (direct) { %>checked="checked" <% } %> disabled></input></dd>
+          </dl>
+        </div>
+      </div>
+    </script>
+    
+    <script type="text/template" id="model-with-rows">
+      <div class="row">
+        <form class="form-horizontal">
+          <% _.each(fields, function(field) { %>
+            <%= fieldTemplate(field) %>
+          <% }); %>
+        </form>
+      </div>
+      <div class="row">
+        <div class="col-12-sm">
+        <table class="table">
+          <thead>
+            <tr>
+              <% _.each(headers, function(header) { %>
+                <%= headerTemplate(header) %>
+              <% }); %>
+            </tr>
+          </thead>
+          <tbody></tbody>
+          <tfoot></tfoot>
+        </table>
+        </div>
+      </div>
+    </script>
+    <!-- Fine Templates -->
+  
+    <script src="{{ STATIC_URL }}js/vendor/jquery.js"></script>
+    <script src="{{ STATIC_URL }}js/vendor/json2.js"></script>
+    <script src="{{ STATIC_URL }}js/vendor/underscore.js"></script>
+    <script src="{{ STATIC_URL }}js/vendor/backbone.js"></script>
+    <script src="{{ STATIC_URL }}js/vendor/backbone.computedfields.js"></script>
+    <script src="{{ STATIC_URL }}js/vendor/backbone.picky.js"></script>
+    <script src="{{ STATIC_URL }}js/vendor/backbone.validation.js"></script>
+    <script src="{{ STATIC_URL }}js/vendor/backbone.stickit.js"></script>
+    <script src="{{ STATIC_URL }}js/vendor/backbone.marionette.js"></script>
+    <script src="{{ STATIC_URL }}js/vendor/bootstrap.js"></script>
+    <script src="{{ STATIC_URL }}js/vendor/bootstrap-switch.js"></script>
+    <script src="{{ STATIC_URL }}js/vendor/fileinput.js"></script>
+    <script src="{{ STATIC_URL }}js/vendor/fileinput_locale_it.js"></script>
+    <script src="{{ STATIC_URL }}js/vendor/date.js"></script>
+    <script src="{{ STATIC_URL }}js/vendor/moment.min.js"></script>
+    <script src="{{ STATIC_URL }}js/vendor/moment-it.js"></script>
+    <script src="{{ STATIC_URL }}js/vendor/select2.js"></script>
+    <script src="{{ STATIC_URL }}js/vendor/jquery.dataTables.js"></script>
+    <script src="{{ STATIC_URL }}js/vendor/dataTables.bootstrap.js"></script>
+    <script src="{{ STATIC_URL }}js/vendor/dataTables.pageResize.js"></script>
+    <script src="{{ STATIC_URL }}js/vendor/numeral.min.js"></script>
+    <script src="{{ STATIC_URL }}js/vendor/numeral-it.js"></script>
+    <script src="{{ STATIC_URL }}js/vendor/backbone.paginator.js"></script>
+    <script src="{{ STATIC_URL }}js/vendor/backgrid.js"></script>
+    <script src="{{ STATIC_URL }}js/vendor/extensions/paginator/backgrid-paginator.js"></script>
+    <script src="{{ STATIC_URL }}js/vendor/extensions/text-cell/backgrid-text-cell.js"></script>
+    <script src="{{ STATIC_URL }}js/vendor/extensions/moment-cell/backgrid-moment-cell.min.js"></script>
+
+    <script src="{{ STATIC_URL }}js/anagrafiche/config/backbone/singleton.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/config/backbone/model.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/config/backbone/collection.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/config/backbone/validation.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/config/marionette/approuter.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/config/marionette/views.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/config/marionette/modalregion.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/config/marionette/transitionregion.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/config/marionette/controller.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/wms.js"></script>
+
+    <script src="{{ STATIC_URL }}js/anagrafiche/models/user.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/models/session.js"></script>
+    
+    <script src="{{ STATIC_URL }}js/anagrafiche/models/types.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/common/behaviors.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/common/views.js"></script>
+
+    <script src="{{ STATIC_URL }}js/anagrafiche/models/user.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/session/session_app.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/session/views.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/session/controller.js"></script>
+    
+    <script src="{{ STATIC_URL }}js/anagrafiche/models/header.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/header/header_app.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/header/list/controller.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/header/list/views.js"></script>
+    
+    <script src="{{ STATIC_URL }}js/anagrafiche/models/entity.js"></script>
+    <!--script src="{{ STATIC_URL }}js/anagrafiche/entities/forms.js"></script-->
+    
+    <script src="{{ STATIC_URL }}js/anagrafiche/pages/pages_app.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/pages/show/controller.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/pages/show/views.js"></script>
+   
+    <script src="{{ STATIC_URL }}js/anagrafiche/models/owner.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/owner/owner_app.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/owner/show/views.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/owner/show/controller.js"></script>
+
+    <script src="{{ STATIC_URL }}js/anagrafiche/models/employee.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/employees/employees_app.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/employees/forms.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/employees/list/views.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/employees/list/controller.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/employees/show/views.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/employees/show/controller.js"></script>
+    
+    <script src="{{ STATIC_URL }}js/anagrafiche/models/client.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/models/estimate.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/models/order.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/models/note.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/models/invoice.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/clients/clients_app.js"></script>
+    <!--script src="{{ STATIC_URL }}js/anagrafiche/clients/forms.js"></script-->
+    <script src="{{ STATIC_URL }}js/anagrafiche/clients/list/views.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/clients/list/controller.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/clients/show/views.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/clients/show/controller.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/clients/estimates/views.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/clients/estimates/controller.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/clients/orders/views.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/clients/orders/controller.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/clients/notes/views.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/clients/notes/controller.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/clients/invoices/views.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/clients/invoices/controller.js"></script>
+
+    <script src="{{ STATIC_URL }}js/anagrafiche/models/supplier.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/suppliers/suppliers_app.js"></script>
+    <!--script src="{{ STATIC_URL }}js/anagrafiche/suppliers/forms.js"></script-->
+    <script src="{{ STATIC_URL }}js/anagrafiche/suppliers/list/views.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/suppliers/list/controller.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/suppliers/show/views.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/suppliers/show/controller.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/suppliers/estimates/views.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/suppliers/estimates/controller.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/suppliers/orders/views.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/suppliers/orders/controller.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/suppliers/notes/views.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/suppliers/notes/controller.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/suppliers/invoices/views.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/suppliers/invoices/controller.js"></script>
+
+
+    <script src="{{ STATIC_URL }}js/anagrafiche/models/commission.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/commissions/commissions_app.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/commissions/forms.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/commissions/list/views.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/commissions/list/controller.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/commissions/show/views.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/commissions/show/controller.js"></script>
+
+    <script src="{{ STATIC_URL }}js/anagrafiche/models/article.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/articles/articles_app.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/articles/list/views.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/articles/list/controller.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/articles/show/views.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/articles/show/controller.js"></script>
+
+    <script src="{{ STATIC_URL }}js/anagrafiche/models/sheet.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/sheets/sheets_app.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/sheets/forms.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/sheets/list/views.js"></script>
+    <script src="{{ STATIC_URL }}js/anagrafiche/sheets/list/controller.js"></script>
+
+    <script src="{{ STATIC_URL }}js/anagrafiche/config/wms/labels.it.js"></script>
+  
+    <script>
+      $(document).ready(function() {
+        var tokenValue = $("meta[name='csrf-token']").attr('content');
+
+        function csrfSafeMethod(method) {
+          // these HTTP methods do not require CSRF protection
+          return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+        
+        function getCookie(name) {
+          var cookieValue = null;
+          if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+              var cookie = jQuery.trim(cookies[i]);
+              // Does this cookie string begin with the name we want?
+              if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+              }
+            }
+          }
+          return cookieValue;
+        }
+
+        $.ajaxSetup({
+          beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type)) {
+              xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken") || tokenValue);
+            }
+  
+            var url = settings.url.split('?');
+            if (!url[0].endsWith('/')) {
+              url[0] += '/'
+            }
+            //if (window.location.port === '8080') {
+            if (window.location.protocol === 'file:') {
+              url[0] = 'http://mrferro.studiogammasnc.it' + url[0];
+            }
+            settings.url = url.join('?');
+          }
+        });
+        WMS.start();
+      });
+    </script>
+  </body>
+</html>

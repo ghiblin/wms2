@@ -1,0 +1,167 @@
+[
+{
+    "fields": {
+        "cancellato": false,
+        "costo_orario": "13.42",
+        "cognome": "Facchetti",
+        "matricola": 32,
+        "nome": "Michele Antonio"
+    },
+    "pk": 1,
+    "model": "anagrafiche.dipendente"
+},
+{
+    "fields": {
+        "cancellato": false,
+        "costo_orario": "16.09",
+        "cognome": "Cerea",
+        "matricola": 33,
+        "nome": "Marco"
+    },
+    "pk": 2,
+    "model": "anagrafiche.dipendente"
+},
+{
+    "fields": {
+        "cancellato": false,
+        "costo_orario": "13.42",
+        "cognome": "Gandossi",
+        "matricola": 37,
+        "nome": "Davide"
+    },
+    "pk": 3,
+    "model": "anagrafiche.dipendente"
+},
+{
+    "fields": {
+        "cancellato": false,
+        "costo_orario": "13.42",
+        "cognome": "Mamadou",
+        "matricola": 38,
+        "nome": "Ndiaye"
+    },
+    "pk": 4,
+    "model": "anagrafiche.dipendente"
+},
+{
+    "fields": {
+        "cancellato": false,
+        "costo_orario": "20.91",
+        "cognome": "Cominelli",
+        "matricola": 29,
+        "nome": "Pierangelo"
+    },
+    "pk": 5,
+    "model": "anagrafiche.dipendente"
+},
+{
+    "fields": {
+        "cancellato": true,
+        "costo_orario": "20.00",
+        "cognome": "Ganz",
+        "matricola": 6,
+        "nome": "Maurizio"
+    },
+    "pk": 6,
+    "model": "anagrafiche.dipendente"
+},
+{
+    "fields": {
+        "cancellato": false,
+        "costo_orario": "7.05",
+        "cognome": "Matteo",
+        "matricola": 41,
+        "nome": "Ghislandi"
+    },
+    "pk": 7,
+    "model": "anagrafiche.dipendente"
+},
+{
+    "fields": {
+        "cancellato": false,
+        "costo_orario": "1.00",
+        "cognome": "Vavassori",
+        "matricola": 42,
+        "nome": "Ezio"
+    },
+    "pk": 8,
+    "model": "anagrafiche.dipendente"
+},
+{
+    "fields": {
+        "cancellato": false,
+        "costo_orario": "1.00",
+        "cognome": "Beretta",
+        "matricola": 43,
+        "nome": "Gianmaria"
+    },
+    "pk": 9,
+    "model": "anagrafiche.dipendente"
+},
+{
+    "fields": {
+        "cancellato": false,
+        "costo_orario": "0.10",
+        "cognome": "Lavelli",
+        "matricola": 44,
+        "nome": "Vladimiro"
+    },
+    "pk": 10,
+    "model": "anagrafiche.dipendente"
+},
+{
+    "fields": {
+        "cancellato": true,
+        "costo_orario": "10.00",
+        "cognome": "Test",
+        "matricola": 1,
+        "nome": "Sergiow"
+    },
+    "pk": 11,
+    "model": "anagrafiche.dipendente"
+},
+{
+    "fields": {
+        "cancellato": true,
+        "costo_orario": "1.00",
+        "cognome": "test",
+        "matricola": 2,
+        "nome": "Sergio"
+    },
+    "pk": 12,
+    "model": "anagrafiche.dipendente"
+},
+{
+    "fields": {
+        "cancellato": true,
+        "costo_orario": "1.00",
+        "cognome": "test",
+        "matricola": 3,
+        "nome": "Sergio"
+    },
+    "pk": 13,
+    "model": "anagrafiche.dipendente"
+},
+{
+    "fields": {
+        "cancellato": true,
+        "costo_orario": "1.00",
+        "cognome": "Test1",
+        "matricola": 1,
+        "nome": "Sergio"
+    },
+    "pk": 14,
+    "model": "anagrafiche.dipendente"
+},
+{
+    "fields": {
+        "cancellato": true,
+        "costo_orario": "20.00",
+        "cognome": "test2",
+        "matricola": 2,
+        "nome": "Stefano"
+    },
+    "pk": 15,
+    "model": "anagrafiche.dipendente"
+}
+]

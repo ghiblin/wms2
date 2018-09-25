@@ -1,0 +1,280 @@
+{% extends "base_pdf.html" %}
+
+{% block title %}Preventivo Cliente {{ preventivo.codice }} {% endblock %}
+
+{% block container %}
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-24 row-no-padding">
+        <div class="panel panel-default">
+          <div class="panel-heading text-center">
+            <h4>PREVENTIVO</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <img style="width:100%" src="{{ STATIC_URL }}img/mrFerro.jpg">
+      </div>
+
+      <div class="col-xs-12 text-right">
+        <!-- <h1>INVOICE</h1>
+        <h1><small>Invoice #001</small></h1> -->
+        <small><b>MR Ferro S.A.S. di Ruggeri Claudio & C.</b></small><br>
+        <small>Sede Legale: Via Delle Industrie, 14 -24060 Bolgare (BG)</small><br>
+        <small>Sede operativa: via Lago d'Iseo, 5 24060 Bolgare (BG)</small><br>
+        <small>Tel. e Fax 035.4499168 - E-mail: mrferrorc@virgilio.it</small><br>
+        <small>Reg. Imp. BG - C.F. E P.IVA 03362370169</small><br>
+      </div>
+      <!-- <hr>
+
+      <div class="row">
+        <div class="col-xs-5">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4>From: <a href="#">Your Name</a></h4>
+            </div>
+            <div class="panel-body">
+              <p>
+                Address <br>
+                details <br>
+                more <br>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-5 col-xs-offset-2 text-right">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4>To : <a href="#">Client Name</a></h4>
+            </div>
+            <div class="panel-body">
+              <p>
+                Address <br>
+                details <br>
+                more <br>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div> --> <!-- / end client details section -->
+
+    </div> <!-- /row -->
+
+    <br>
+
+    <div class="row">
+      <table class="col-xs-24 row-no-padding table table-bordered bordo-nero">
+        <tr>
+          <td class="col-xs-2 sfondo-colorato bordo-nero">
+            Ditta
+          </td>
+          <td class="col-xs-6 bordo-nero">
+            {{ preventivo.cliente.get_nome_completo }}
+          </td>
+          <td class="col-xs-2 sfondo-colorato bordo-nero">
+            Tel
+          </td>
+          <td class="col-xs-6 bordo-nero">
+            {{ telefono_ufficio }}
+          </td>
+          <td class="col-xs-2 sfondo-colorato bordo-nero">
+            Preventivo:
+          </td>
+          <td class="col-xs-6 bordo-nero">
+            {{ preventivo.codice }}
+          </td>
+        </tr>
+        <tr>
+          <td class="col-xs-2 sfondo-colorato bordo-nero">
+            Via e n.
+          </td>
+          <td class="col-xs-6 bordo-nero">
+            Via Curiel 6
+          </td>
+          <td class="col-xs-2 sfondo-colorato bordo-nero">
+            Fax
+          </td>
+          <td class="col-xs-6 bordo-nero">
+            {{ fax_ufficio }}
+          </td>
+          <td class="col-xs-2 sfondo-colorato bordo-nero">
+            Data
+          </td>
+          <td class="col-xs-6 bordo-nero">
+            {{ preventivo.data }}
+          </td>
+        </tr>
+
+        <tr>
+          <td class="col-xs-2 sfondo-colorato bordo-nero">
+            Città
+          </td>
+          <td class="col-xs-6 bordo-nero">
+            Pieve Emanuele (MI)
+          </td>
+          <td class="col-xs-2 sfondo-colorato bordo-nero">
+            Cantiere
+          </td>
+          <td class="col-xs-6 bordo-nero">
+            via Longa - Pieve Emanuele (MI)
+          </td>
+          <td class="col-xs-2 sfondo-colorato bordo-nero">
+            Oggetto
+          </td>
+          <td class="col-xs-6 bordo-nero">
+            {{ preventivo.oggetto }}
+          </td>
+        </tr>
+
+        <tr>
+          <td class="col-xs-2 sfondo-colorato bordo-nero">
+            Alla C.A.
+          </td>
+          <td class="col-xs-6 bordo-nero">
+            Giuseppe de Nardi
+          </td>
+          <td class="col-xs-2 sfondo-colorato bordo-nero">
+            E-mail:
+          </td>
+          <td class="col-xs-6 bordo-nero">
+            info@prova.it
+          </td>
+          <td class="col-xs-2">
+            
+          </td>
+          <td class="col-xs-6">
+            
+          </td>
+        </tr>
+      </table>
+    </div> <!-- /row -->
+
+    <div class="row">
+      <table class="col-xs-24 row-no-padding table">
+        <tr>
+          <td class="col-xs-16 solid-border sfondo-colorato text-center">
+            DESCRIZIONE
+          </td>
+          <td class="col-xs-1 solid-border sfondo-colorato text-center">
+            UM
+          </td>
+          <td class="col-xs-1 solid-border sfondo-colorato text-center">
+            Q.TÀ
+          </td>
+          <td class="col-xs-3 solid-border sfondo-colorato text-center">
+            PREZZO UNITARIO
+          </td>
+          <td class="col-xs-3 solid-border sfondo-colorato text-center">
+            IMPORTO
+          </td>
+        </tr>
+        {% for r in righe %}
+        <tr>
+          <td class="col-xs-16 dotted-border">
+            {{ r.articolo_descrizione }}
+          </td>
+          <td class="col-xs-1 dotted-border">
+            {{ r.articolo.get_unita_di_misura_display }}
+          </td>
+          <td class="col-xs-1 dotted-border">
+            {{ r.quantita }}
+          </td>
+          <td class="col-xs-3 dotted-border">
+            {{ r.articolo_prezzo }}
+          </td>
+          <td class="col-xs-3 dotted-border">
+            {{ r.get_importo }}
+          </td>
+        </tr>
+        {% endfor %}
+        <tr>
+          <td class="col-xs-16 dotted-border-top">
+          </td>
+          <td class="col-xs-1 dotted-border-top">
+          </td>
+          <td class="col-xs-1 dotted-border-top">
+          </td>
+          <td class="col-xs-3 solid-border">
+            TOTALE
+          </td>
+          <td class="col-xs-3 solid-border">
+            {{ preventivo.totale }}
+          </td>
+        </tr>
+      </table>
+    </div> <!-- /row -->
+    
+    <div class="row">
+      <p><b>Il presente preventivo ha validità un mese dalla data di emissione</b></p>
+      <p>I prezzi si intendono IVA esclusa - Prezzi F.Co Ns magazzino</p>
+      
+      <div class="col-xs-24 titolo-sezione sfondo-colorato text-center solid-border-top">
+        CONDIZIONI DI PAGAMENTO
+      </div>
+      
+      <div class="col-xs-24 row-no-padding">
+        <div class="col-xs-12 solid-border">
+          Ric. Bancaria<br>Bonifico<br>Rimessa diretta
+        </div>
+        <div class="col-xs-12 solid-border">
+          30 gg<br>60 gg<br>&nbsp;
+        </div>
+      </div>
+
+      <div class="col-xs-24 titolo-sezione sfondo-colorato text-center">
+        DOCUMENTAZIONE PROGETTUALE
+      </div>
+
+      <div class="col-xs-24 row-no-padding">
+        <div class="col-xs-12 solid-border">
+          Disegni costruttivi a carico del cliente: sì / no
+        </div>
+        <div class="col-xs-12 solid-border">
+          Relazione di calcolo a carico del cliente
+        </div>
+      </div>
+
+      <div>
+        Qualora il cliente/progettista non espliciti la Classe di Esecuzione dei prodotti, MR Ferro Sas applica la Classe di Esecuzione EXC 2 come previsto dalla norma EN 1090-1.
+      </div>
+
+      <div class="col-xs-24 titolo-sezione sfondo-colorato text-center solid-border-top">
+        CONDIZIONI GENERALI DI FORNITURA
+      </div>
+
+      <div class="col-xs-24 row-no-padding">
+        <div class="col-xs-24 solid-border">
+          Per tutto quanto non espressamente indicato nel presente preventivo si fa riferimento alle condizioni generali di fornitura M72-01-02
+        </div>
+      </div>
+      <div>
+        Vi preghiamo di voler sottoscrivere per accettazione il presente preventivo, indicando Vs. ragione sociale corretta e, se necessario, banca d'appoggio. <br>
+        Così facendo ci permette di eseguire tempestivamente i lavori confermati.
+      </div>
+    </div> <!-- /row -->
+    
+
+    <br><br>
+
+    <div class="row">
+      <div class="col-xs-8">&nbsp;</div>
+      <div class="col-xs-8 text-center">Firma per Accettazione</div>
+      <div class="col-xs-8 text-center">Il Responsabile tecnico</div>
+      
+      <br><br><br>
+      
+      <div class="col-xs-8">Bolgare (BG) lì, 30/01/15</div>
+      <div class="col-xs-8 text-center">_____________________________</div>
+      <div class="col-xs-8 text-center">_____________________________</div>
+
+    </div> <!-- /row -->
+    <br><br><br>
+
+
+
+  </div> <!-- /container -->
+{% endblock %}

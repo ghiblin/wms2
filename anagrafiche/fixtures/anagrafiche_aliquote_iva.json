@@ -1,0 +1,29 @@
+[
+{
+    "fields": {
+        "codice": "IVA22",
+        "percentuale": "22.00",
+        "descrizione": "Iva al 22%"
+    },
+    "pk": 1,
+    "model": "anagrafiche.aliquotaiva"
+},
+{
+    "fields": {
+        "codice": "IVA4",
+        "percentuale": "4.00",
+        "descrizione": "Iva al 4%"
+    },
+    "pk": 2,
+    "model": "anagrafiche.aliquotaiva"
+},
+{
+    "fields": {
+        "codice": "ES1",
+        "percentuale": "0.00",
+        "descrizione": "Esente in base all'art. xx "
+    },
+    "pk": 3,
+    "model": "anagrafiche.aliquotaiva"
+}
+]

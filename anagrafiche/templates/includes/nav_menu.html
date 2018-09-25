@@ -1,0 +1,9 @@
+<ul class="left">
+    <li role="menuitem" {% if active_tab == 'home' %} class="active" {% endif %}><a href="{% url 'home' %}">Home</a></li>
+    <li role="menuitem" {% if active_tab == 'clienti' %} class="active" {% endif %}><a href="{% url 'clienti' %}">Clienti</a></li>
+    <li role="menuitem" {% if active_tab == 'commesse' %} class="active" {% endif %}><a href="{% url 'commesse' %}">Commesse</a></li>
+    <li role="menuitem" {% if active_tab == 'dipendenti' %} class="active" {% endif %}><a href="{% url 'dipendenti' %}">Dipendenti</a></li>
+    <li role="menuitem" {% if active_tab == 'consuntivi' %} class="active" {% endif %}><a href="{% url 'consuntivi' %}">Consuntivi</a></li>
+    <li role="menuitem" {% if active_tab == 'costiCommessa' %} class="active" {% endif %}><a href="{% url 'costiCommessa' %}">Costi Commessa</a></li>
+    <li role="menuitem" {% if active_tab == 'contiCorrenti' %} class="active" {% endif %}><a href="{% url 'contiCorrenti' %}">Conti Correnti</a></li>
+</ul>

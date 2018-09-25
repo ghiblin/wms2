@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>{% block title %}{% endblock %}</title>
+    <!-- <link href="css/bootstrap.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap-print-24.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/printStyles.css">
+  </head>
+  <body>
+    {% block container %}
+    {% endblock %}
+  </body>
+</html>

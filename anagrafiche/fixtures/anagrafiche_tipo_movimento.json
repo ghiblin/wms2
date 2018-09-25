@@ -1,0 +1,42 @@
+[
+{
+    "model": "anagrafiche.tipomovimento",
+    "fields": {
+        "segno": 1,
+        "descrizione": "Carico"
+    },
+    "pk": 1
+},
+{
+    "model": "anagrafiche.tipomovimento",
+    "fields": {
+        "segno": -1,
+        "descrizione": "Scarico"
+    },
+    "pk": 2
+},
+{
+    "model": "anagrafiche.tipomovimento",
+    "fields": {
+        "segno": -1,
+        "descrizione": "Reso"
+    },
+    "pk": 3
+},
+{
+    "model": "anagrafiche.tipomovimento",
+    "fields": {
+        "segno": 1,
+        "descrizione": "Correzione positiva"
+    },
+    "pk": 4
+},
+{
+    "model": "anagrafiche.tipomovimento",
+    "fields": {
+        "segno": -1,
+        "descrizione": "Correzione negativa"
+    },
+    "pk": 5
+}
+]

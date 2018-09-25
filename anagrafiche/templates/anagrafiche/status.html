@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta author="Studio Gamma snc">
+    <title>Mr. Ferro WMS</title>
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/select2.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/select2-bootstrap.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css" />
+    <script src="{{ STATIC_URL }}js/vendor/modernizr.js"></script>
+    <meta name="csrf-token" content="{{csrf_token}}">
+    <style>
+   
+    </style>
+  </head>
+  <body>
+  
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <div id="header-region"></div>
+        <ul id="login-region" class="nav navbar-nav navbar-right"></ul>
+      </div>
+    </div>
+  </nav>
+  
+  <div id="content" class="container">
+    <div id="alert-region"></div>
+    <div id="main-region">
+      utente: {{ user }}<br>
+      utente è superuser: {{ user.is_superuser }}<br>
+      Salta controllo dei permessi: {{ skip_permission_check }}<br>
+      <br>
+      Numero permessi dell'utente: {{ permessi|length }}<br>
+      Permessi utente:
+      <ul>
+      {% for permesso in permessi %}
+        <li>{{ permesso }}</li>
+      {% endfor %}
+      </ul>
+      
+
+    </div>
+  </div>
+
+    <script src="{{ STATIC_URL }}js/vendor/jquery.js"></script>
+    <script src="{{ STATIC_URL }}js/vendor/bootstrap.js"></script>
+  </body>
+</html>

@@ -1,0 +1,16 @@
+*.sqlite3
+*.pyc
+__pycache__
+local_settings.py
+
+logs/
+
+commesse/
+
+#### OS X temporary files that should never be committed
+
+.DS_Store
+*.swp
+*.lock
+profile
+.idea/

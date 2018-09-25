@@ -1,0 +1,42 @@
+[
+{
+    "pk": 1,
+    "fields": {
+        "descrizione": "profilati",
+        "sigla": "PR"
+    },
+    "model": "anagrafiche.classearticolo"
+},
+{
+    "pk": 2,
+    "fields": {
+        "descrizione": "lamiere normali",
+        "sigla": "LN"
+    },
+    "model": "anagrafiche.classearticolo"
+},
+{
+    "pk": 3,
+    "fields": {
+        "descrizione": "lamiere inox",
+        "sigla": "LX"
+    },
+    "model": "anagrafiche.classearticolo"
+},
+{
+    "pk": 4,
+    "fields": {
+        "descrizione": "travi",
+        "sigla": "TR"
+    },
+    "model": "anagrafiche.classearticolo"
+},
+{
+    "pk": 5,
+    "fields": {
+        "descrizione": "disegni",
+        "sigla": "DI"
+    },
+    "model": "anagrafiche.classearticolo"
+}
+]

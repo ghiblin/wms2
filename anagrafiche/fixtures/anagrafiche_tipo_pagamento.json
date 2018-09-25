@@ -1,0 +1,79 @@
+[
+{
+    "pk": 1,
+    "fields": {
+        "descrizione": "Rimessa Diretta Vista Fattura"
+    },
+    "model": "anagrafiche.tipopagamento"
+},
+{
+    "pk": 2,
+    "fields": {
+        "descrizione": "Bonifico Bancario Vista Fattura"
+    },
+    "model": "anagrafiche.tipopagamento"
+},
+{
+    "pk": 3,
+    "fields": {
+        "descrizione": "Bonifico Bancario 30gg d.f."
+    },
+    "model": "anagrafiche.tipopagamento"
+},
+{
+    "pk": 4,
+    "fields": {
+        "descrizione": "Bonifico Bancario 30/60/90/120gg d.f. f.m."
+    },
+    "model": "anagrafiche.tipopagamento"
+},
+{
+    "pk": 5,
+    "fields": {
+        "descrizione": "Bonifico Bancario 120/150gg d.f. f.m."
+    },
+    "model": "anagrafiche.tipopagamento"
+},
+{
+    "pk": 6,
+    "fields": {
+        "descrizione": "Ri.ba. 30gg d.f. f.m."
+    },
+    "model": "anagrafiche.tipopagamento"
+},
+{
+    "pk": 7,
+    "fields": {
+        "descrizione": "Ri.ba. 30/60gg d.f. f.m."
+    },
+    "model": "anagrafiche.tipopagamento"
+},
+{
+    "pk": 8,
+    "fields": {
+        "descrizione": "Ri.ba. 60gg d.f. f.m."
+    },
+    "model": "anagrafiche.tipopagamento"
+},
+{
+    "pk": 9,
+    "fields": {
+        "descrizione": "Ri.ba. 60/90 gg d.f. f.m."
+    },
+    "model": "anagrafiche.tipopagamento"
+},
+{
+    "pk": 10,
+    "fields": {
+        "descrizione": "Ri.ba. 60/90gg + 10gg d.f. f.m."
+    },
+    "model": "anagrafiche.tipopagamento"
+},
+{
+    "pk": 11,
+    "fields": {
+        "descrizione": "Ri.ba 60gg f.m. + 15gg"
+    },
+    "model": "anagrafiche.tipopagamento"
+}
+]
