@@ -41,7 +41,7 @@ WMS.module("Commissions.List", function(List, WMS, Backbone, Marionette) {
         options: {
           collection: "@commissions",
           from      : "@from",
-          to        : "@to"
+          to        : "@to",
         },
         events: {
           'commission:selected': 'selectCommission',

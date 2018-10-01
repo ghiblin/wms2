@@ -190,7 +190,26 @@ WMS.module("Models", function(Models, WMS, Backbone, Marionette, $, _) {
   Models.Commissions = Backbone.PageableCollection.extend({
     model: Models.Commission,
     url: "/api/v1/commessa/",
-    mode: 'client',
+    mode: 'infinite',
+    queryParams: {
+      currentPage: 'page',
+      pageSize: 'custom_page_size',
+      totalRecords: 'count',
+    },
+    parseState: function(resp) {
+      return {
+        totalRecords: resp.count,
+      };
+    },
+    parseRecords: function(resp) {
+      return resp.results;
+    },
+    parseLinks: function(resp) {
+      return {
+        prev: resp.previous,
+        next: resp.next,
+      };
+    },
   });
   
   Models.CommissionCost = Backbone.Model.extend({
