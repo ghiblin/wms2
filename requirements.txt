@@ -31,9 +31,11 @@ XlsxWriter
 # per attivare CORS:
 django-cors-headers
 
+# Aggiunge la revision di git a tutti i template (utile per evitare problemi con la cache)
+dealer==2.0.5
+
 # test javascript
 
 # Visto che il repository ufficiale non funziona con python3.4, uso un fork:
 django-casper   
 # -e git+https://github.com/smorstabilini/django-casper.git#egg=django-casper
-
