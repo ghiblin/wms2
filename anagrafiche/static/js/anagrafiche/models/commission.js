@@ -189,7 +189,9 @@ WMS.module("Models", function(Models, WMS, Backbone, Marionette, $, _) {
   */
   Models.Commissions = Backbone.PageableCollection.extend({
     model: Models.Commission,
-    url: "/api/v1/commessa/",
+    url: function() { 
+      return "/api/v1/commessa/?da=" + this.attr('da') + "&a=" + this.attr('a');
+    },
     mode: 'infinite',
     queryParams: {
       currentPage: 'page',
@@ -353,7 +355,18 @@ WMS.module("Models", function(Models, WMS, Backbone, Marionette, $, _) {
   })
 
   WMS.reqres.setHandler("get:commission:list", function(params) {
-    return Models.__fetchCollection("commissionList", Models.Commissions, params);
+console.log('get:commission:list', params);
+    var opts = {};
+    if (params.from instanceof Date) {
+      opts.da = params.from.toISOString().slice(0,10);
+    }
+    if (params.to instanceof Date) {
+      opts.a = params.to.toISOString().slice(0,10);
+    }
+    var coll = new Models.Commissions(opts);
+    coll.fetch();
+    return coll;
+    //return Models.__fetchCollection("commissionList", Models.Commissions, params);
   });
   
   WMS.reqres.setHandler("get:commission", function(id, options) {

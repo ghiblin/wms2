@@ -3,7 +3,7 @@ WMS.module("Commissions.List", function(List, WMS, Backbone, Marionette) {
 
   List.Controller = Marionette.Controller.extend({
     prefetchOptions: [
-      { request: 'get:commission:list', name: 'commissions' },
+      { request: 'get:commission:list', name: 'commissions', options:['from', 'to'] },
     ],
 
     regions: [
