@@ -189,8 +189,11 @@ WMS.module("Models", function(Models, WMS, Backbone, Marionette, $, _) {
   */
   Models.Commissions = Backbone.PageableCollection.extend({
     model: Models.Commission,
-    url: function() { 
-      return "/api/v1/commessa/?da=" + this.attr('da') + "&a=" + this.attr('a');
+    url: function() {
+      var da = this.attr('from') instanceof Date ? this.attr('from').toISOString().slice(0, 10) : '';
+      var a = this.attr('to') instanceof Date ? this.attr('to').toISOString().slice(0, 10) : '';
+      var id = this.attr('clientId') || '';
+      return "/api/v1/commessa/?da=" + da + "&a=" + a + '&cliente=' + id;
     },
     mode: 'infinite',
     queryParams: {
@@ -355,18 +358,9 @@ WMS.module("Models", function(Models, WMS, Backbone, Marionette, $, _) {
   })
 
   WMS.reqres.setHandler("get:commission:list", function(params) {
-console.log('get:commission:list', params);
-    var opts = {};
-    if (params.from instanceof Date) {
-      opts.da = params.from.toISOString().slice(0,10);
-    }
-    if (params.to instanceof Date) {
-      opts.a = params.to.toISOString().slice(0,10);
-    }
-    var coll = new Models.Commissions(opts);
+    var coll = new Models.Commissions(params);
     coll.fetch();
     return coll;
-    //return Models.__fetchCollection("commissionList", Models.Commissions, params);
   });
   
   WMS.reqres.setHandler("get:commission", function(id, options) {

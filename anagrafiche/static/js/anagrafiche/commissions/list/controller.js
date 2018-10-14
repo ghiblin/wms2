@@ -22,7 +22,7 @@ WMS.module("Commissions.List", function(List, WMS, Backbone, Marionette) {
           to      : "@to"
         },
         events: {
-          'search': 'filterCommssions'
+          'search': 'filterCommissions'
         }
       }, { 
         name: 'panelRegion',
@@ -91,11 +91,12 @@ WMS.module("Commissions.List", function(List, WMS, Backbone, Marionette) {
       });
     },
 
-    filterCommssions: function(args) {
-      this._commissions.clientId = args.model.get('clientId')
-      this._commissions.from = args.model.get('from');
-      this._commissions.to = args.model.get('to');
-      this._commissions.render();
+    filterCommissions: function(args) {
+      var c = this._commissions.collection;
+      Object.keys(args.model.attributes).forEach(function(k) {
+        c.attr(k, typeof args.model.get(k) === 'undefined' ? null : args.model.get(k));
+      });
+      c.fetch();
     },
 
     newCommission: function() {
