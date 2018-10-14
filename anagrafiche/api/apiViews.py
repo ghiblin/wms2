@@ -396,6 +396,7 @@ class TipoMovimentoViewSet(LoggingMixin, viewsets.ReadOnlyModelViewSet):
 class ArticoloViewSet(LoggingMixin, viewsets.ModelViewSet):
     queryset = Articolo.objects.non_cancellati()
     serializer_class = ArticoloSerializer
+    pagination_class = DefaultPagination
 
     def get_permissions(self):
         return (MyCustomPerm('articolo', self.action) ,)

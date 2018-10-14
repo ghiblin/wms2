@@ -87,6 +87,34 @@
 			"response": []
 		},
 		{
+			"name": "Commessa (list) con filtro su codice commessa",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost:8000/api/v1/commessa/?codice=15/0072",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"commessa",
+						""
+					],
+					"query": [
+						{
+							"key": "codice",
+							"value": "15/0072"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Commessa (list) con custom_page_size",
 			"request": {
 				"method": "GET",
@@ -109,6 +137,28 @@
 							"key": "custom_page_size",
 							"value": "2"
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Articoli (List)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost:8000/api/v1/articolo/",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"articolo",
+						""
 					]
 				}
 			},
