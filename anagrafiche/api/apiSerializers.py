@@ -435,10 +435,11 @@ class CommessaSerializer(serializers.ModelSerializer):
     ordini = serializers.SerializerMethodField()
     bolle = serializers.SerializerMethodField()
     fatture = serializers.SerializerMethodField()
+    cliente__nome_completo = serializers.SerializerMethodField()
 
     class Meta:
         model = Commessa
-        fields = ('id', 'codice', 'cliente', 'data_apertura', 'data_consegna', 
+        fields = ('id', 'codice', 'cliente', 'cliente__nome_completo', 'data_apertura', 'data_consegna', 
             'prodotto', 'destinazione', 'preventivi', 'ordini', 'bolle', 'fatture')
         read_only_fields = ('id', 'codice')
 
@@ -461,6 +462,9 @@ class CommessaSerializer(serializers.ModelSerializer):
         fatture_non_cancellate = obj.fatture_clienti.filter(cancellato=False)
         fatture_serializzate = [{'id': x.id, 'codice': x.codice, 'data':x.data, 'oggetto':x.oggetto } for x in fatture_non_cancellate]
         return fatture_serializzate
+
+    def get_cliente__nome_completo(self, obj):
+        return obj.cliente.get_nome_completo()
 
     def validate_cliente(self, value):
         # value è un'istanza del modello Entita
