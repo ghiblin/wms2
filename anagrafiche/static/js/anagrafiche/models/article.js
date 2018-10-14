@@ -63,12 +63,24 @@ WMS.module("Models", function(Models, WMS, Backbone, Marionette, $, _) {
     modelName: "article"
   });
   
+  /*
   Models.Articles = Backbone.Collection.extend({
     model: Models.Article,
     url: "/api/v1/articolo/",
     initialize: function() {
       _.extend(this, new Backbone.Picky.SingleSelect(this));
     }
+  });
+  */
+  Models.Articles = Backbone.PageableCollection.extend({
+    model: Models.Article,
+    url: "/api/v1/articolo/",
+    mode: "client",
+    queryParams: {
+      currentPage: 'page',
+      pageSize: 'custom_page_size',
+      totalRecords: 'count',
+    },
   });
 
   Models.Article.prototype.getBatches = function() {

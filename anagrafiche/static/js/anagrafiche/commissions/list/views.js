@@ -146,7 +146,6 @@ WMS.module('Commissions.List', function(List, WMS, Backbone, Marionette, $, _) {
         row: ListRow,
         emptyText: 'Nessuna commessa trovata',
       });
-window.commissions = options.collection;
       Backgrid.Grid.prototype.initialize.call(this, opts);
       Backbone.on('commission:selected', function(c) {
         this.trigger('commission:selected', c);

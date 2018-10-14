@@ -72,6 +72,7 @@ WMS.module("Common", function(Common, WMS, Backbone, Marionette, $, _) {
             '<div class="row">' +
               '<div class="col-sm-12" id="panel-region"></div>' +
               '<div class="col-sm-12" id="master-region"></div>' +
+              '<div class="col-sm-12" id="paginator-region"></div>' +
             '</div>' +
           '</div>' +
           '<div id="filter-region" class="col-md-4" style="height:100%"></div>' +
@@ -95,6 +96,7 @@ WMS.module("Common", function(Common, WMS, Backbone, Marionette, $, _) {
       titleRegion   : "#title-region",
       panelRegion   : "#panel-region",
       masterRegion  : "#master-region",
+      paginatorRegion: '#paginator-region',
       filterRegion  : "#filter-region",
       detailsRegion : "#details-region",
       rowsRegion    : "#rows-region",
@@ -108,7 +110,8 @@ WMS.module("Common", function(Common, WMS, Backbone, Marionette, $, _) {
     regions: {
       titleRegion   : "#title-region",
       panelRegion   : "#panel-region",
-      listRegion    : "#list-region"
+      listRegion    : "#list-region",
+      paginatorRegion: '#paginator-region',
     },
 
     showPanel: true,

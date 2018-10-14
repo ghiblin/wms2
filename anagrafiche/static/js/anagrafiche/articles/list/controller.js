@@ -28,6 +28,12 @@ WMS.module('Articles.List', function(List, WMS, Backbone, Marionette, $, _) {
     , events: {
         'article:selected': 'selectArticle'
       }
+    }, {
+      name: 'paginatorRegion',
+      View: List.Views.Paginator,
+      options: {
+        collection: "@articles",
+      }
     }]
 
   , initialize: function() {
