@@ -1,6 +1,6 @@
 # elenco dei pacchetti da installare
 
-django==1.8
+django==2.2.24
 selenium
 django-extensions
 
